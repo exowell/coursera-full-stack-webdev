@@ -72,3 +72,7 @@ body{
 .affix {
     top:100px;
 }
+
+.text-white {
+    color: #FFF;
+}
