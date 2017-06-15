@@ -1,0 +1,13 @@
+{
+  "name": "conFusion",
+  "version": "1.0.0",
+  "description": "Coursera full stack webdev project",
+  "main": "index.html",
+  "repository": "https://github.com/exowell/coursera-full-stack-webdev.git",
+  "author": "Gabor Szoboszlai",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1"
+  }
+}
