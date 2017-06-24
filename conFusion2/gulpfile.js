@@ -13,7 +13,8 @@ var gulp = require('gulp'),
     rev = require('gulp-rev'),
     browserSync = require('browser-sync'),
     del = require('del'),
-    ngannotate = require('gulp-ng-annotate');
+    ngannotate = require('gulp-ng-annotate'),
+    sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('jshint', function() {
   return gulp.src('app/scripts/**/*.js')
@@ -34,8 +35,8 @@ gulp.task('default', ['clean'], function() {
 gulp.task('usemin',['jshint'], function () {
   return gulp.src('./app/menu.html')
       .pipe(usemin({
-        css:[minifycss(),rev()],
-        js: [ngannotate(),uglify(),rev()]
+        css:[sourcemaps.init({loadMaps: true}),minifycss(),rev(),sourcemaps.write('.')],
+        js: [sourcemaps.init({loadMaps: true}),ngannotate(),uglify(),rev(),sourcemaps.write('.')]
       }))
       .pipe(gulp.dest('dist/'));
 });
