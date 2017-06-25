@@ -55,13 +55,15 @@
         </blockquote>
       </div>
       <div class="col-xs-9 col-xs-offset-1" ng-controller="DishCommentController">
-        <div class="col-xs-12" ng-show="commentForm.$valid && commentForm.$dirty">
-          <blockquote>
-            <p>{{comment.rating}} Stars</p>
-            <p>{{comment.comment}}</p>
-            <footer>{{comment.author}}, <cite>(Your comment preview)</cite></footer>
-          </blockquote>
-        </div>
+        <ul class="list-unstyled">
+          <li class="media" ng-show="commentForm.$valid && commentForm.$dirty">
+            <blockquote>
+              <p>{{comment.rating}} Stars</p>
+              <p>{{comment.comment}}</p>
+              <footer>{{comment.author}}, <cite>(Your comment preview)</cite></footer>
+            </blockquote>
+          </li>
+        </ul>
         <form class="form-horizontal" name="commentForm" ng-submit="submitComment()" novalidate>
           <div class="form-group row" ng-class="{ 'has-error' : commentForm.author.$invalid && commentForm.author.$dirty }">
             <label for="author" class="col-sm-2 col-form-label text-right">Your Name</label>
