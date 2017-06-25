@@ -27,24 +27,74 @@
 
 <body>
 
-  <div class="container">
+  <div class="container" ng-controller="DishDetailController">
     <div class="row row-content">
       <div class="col-xs-12">
-        <p>Put the dish details here</p>
-        <p>You should have completed this in Assignment 1</p>
+        <div class="media">
+          <div class="media-left media-middle">
+            <a href="#">
+              <img class="media-object img-thumbnail" ng-src={{dish.image}} alt="{{dish.name}}">
+            </a>
+          </div>
+          <div class="media-body">
+            <h2 class="media-heading">{{dish.name}}
+              <span class="label label-danger">{{dish.label}}</span>
+              <span class="badge">{{dish.price | currency}}</span></h2>
+            <p>{{dish.description}}</p>
+          </div>
+        </div>
       </div>
       <div class="col-xs-9 col-xs-offset-1">
-        <p>Put the comments here</p>
-        <p>You should have completed this in Assignment 1</p>
+        <span class="h4" style="padding-right:20px">Customer Comments</span>
+        <span class="text-muted" style="padding-right:10px">Sort by:</span>
+        <input type="text" id="order-by" ng-model="orderBy">
+        <blockquote ng-repeat="comment in dish.comments | orderBy: orderBy">
+          <p>{{comment.rating}} Stars</p>
+          <p>{{comment.comment}}</p>
+          <footer>{{comment.author}}, {{comment.date | date}}</footer>
+        </blockquote>
       </div>
       <div class="col-xs-9 col-xs-offset-1" ng-controller="DishCommentController">
-        <ul class="list-unstyled">
-          <p>Task 3: Here you include the code to show the live preview of the comment</p>
-          <p>The comment should be shown only when the form contains valid information and is not pristine</p>
-        </ul>
+        <div class="coll-xs-12" ng-show="commentForm.$valid && commentForm.$dirty">
+          <blockquote>
+            <p>{{comment.rating}} Stars</p>
+            <p>{{comment.comment}}</p>
+            <footer>{{comment.author}}, <cite>(Your comment preview)</cite></footer>
+          </blockquote>
+        </div>
         <form class="form-horizontal" name="commentForm" ng-submit="submitComment()" novalidate>
-          <p>Task 1: Design the form to submit the comments</p>
-          <p>Task 2: You need to validate that the user name and comments are entered</p>
+          <div class="form-group row" ng-class="{ 'has-error' : commentForm.author.$invalid && commentForm.author.$dirty }">
+            <label for="author" class="col-sm-2 col-form-label text-right">Your Name</label>
+            <div class="col-sm-10">
+              <input type="text" name="author" id="author" class="form-control"
+                ng-model="comment.author" placeholder="Enter your name" required>
+              <div class="help-block" ng-show="commentForm.author.$invalid && commentForm.author.$dirty">
+                Name is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 radio text-right">Number of Stars</label>
+            <div class="col-sm-10">
+                <label class="radio-inline" ng-repeat="nos in [1,2,3,4,5]">
+                    <input type="radio" name="rating" id="rating{{nos}}" value="{{nos}}" ng-model="comment.rating"> {{nos}}
+                </label>
+            </div>
+          </div>
+          <div class="form-group row" ng-class="{ 'has-error' : commentForm.comment.$invalid && commentForm.comment.$dirty }">
+            <label for="comment" class="col-sm-2 col-form-label text-right">Your comments</label>
+            <div class="col-sm-10">
+              <textarea class="form-control" rows="10" ng-model="comment.comment" name="comment" id="comment" required></textarea>
+              <div class="help-block" ng-show="commentForm.comment.$invalid && commentForm.comment.$dirty">
+                Comment is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button class="btn btn-primary" type="submit" ng-disabled="commentForm.$invalid">Submit Comment</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
