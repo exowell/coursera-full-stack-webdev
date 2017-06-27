@@ -29,16 +29,21 @@ gulp.task('clean', function() {
 
 // Default task
 gulp.task('default', ['clean'], function() {
-    gulp.start('usemin', 'imagemin','copyfonts');
+    gulp.start('usemin', 'imagemin','copy-html','copyfonts');
 });
 
 gulp.task('usemin',['jshint'], function () {
-  return gulp.src('./app/menu.html')
+  return gulp.src('./app/index.html')
       .pipe(usemin({
         css:[sourcemaps.init({loadMaps: true}),minifycss(),rev(),sourcemaps.write('.')],
         js: [sourcemaps.init({loadMaps: true}),ngannotate(),uglify(),rev(),sourcemaps.write('.')]
       }))
       .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('copy-html', function () {
+  return gulp.src(['app/*.html','!app/index.html'])
+    .pipe(gulp.dest('./dist'));
 });
 
 // Images
@@ -77,7 +82,7 @@ gulp.task('browser-sync', ['default'], function () {
    browserSync.init(files, {
       server: {
          baseDir: "dist",
-         index: "menu.html"
+         index: "index.html"
       }
    });
         // Watch any files in dist/, reload on change
