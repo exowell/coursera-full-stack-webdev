@@ -2,3 +2,5 @@
 /conFusion2/dist/
 /conFusion2/.tmp/
 json-server/
+/conFusion2/yarn-error.log
+/.gitignore
