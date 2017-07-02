@@ -5,10 +5,10 @@
       <h3 align=center>Our Lipsmacking Culinary Creations</h3>
     </div>
     <div class="col-xs-12 col-sm-9 col-sm-pull-3">
-      <div ng-if="!showDish">
-        {{message}}
+      <div ng-if="!show.featuredDish">
+        {{message.featuredDish}}
       </div>
-      <div class="media" ng-if="showDish">
+      <div class="media" ng-if="show.featuredDish">
         <div class="media-left media-middle">
           <a href="#">
             <img class="media-object img-thumbnail" ng-src="{{featuredDish.image}}" alt="{{featuredDish.name}}">
@@ -30,7 +30,10 @@
       <h3 align=center>This Month's Promotions</h3>
     </div>
     <div class="col-xs-12 col-sm-9">
-      <div class="media">
+      <div ng-if="!show.featuredPromotion">
+        {{message.featuredPromotion}}
+      </div>
+      <div class="media" ng-if="show.featuredPromotion">
         <div class="media-body">
           <h2 class="media-heading">{{featuredPromotion.name}} <span ng-show="featuredPromotion.label !== ''" class="label label-danger">{{featuredPromotion.label}}</span>
           <span class="badge">{{featuredPromotion.price | currency}}</span></h2>
@@ -38,7 +41,7 @@
         </div>
         <div class="media-right media-middle">
           <a href="#">
-            <img class="media-object img-thumbnail" src="{{featuredPromotion.image}}" alt="{{featuredPromotion.name}}">
+            <img class="media-object img-thumbnail" ng-src="{{featuredPromotion.image}}" alt="{{featuredPromotion.name}}">
           </a>
         </div>
       </div>
@@ -51,10 +54,13 @@
       <h3 align=center>Meet our Culinary Specialists</h3>
     </div>
     <div class="col-xs-12 col-sm-9 col-sm-pull-3">
-      <div class="media">
+      <div ng-if="!show.executiveChef">
+        {{ message.executiveChef }}
+      </div>
+      <div class="media" ng-if="show.executiveChef">
         <div class="media-left media-middle">
           <a href="#">
-            <img class="media-object img-thumbnail" src="{{executiveChef.image}}" alt="{{executiveChef.name}}">
+            <img class="media-object img-thumbnail" ng-src="{{executiveChef.image}}" alt="{{executiveChef.name}}">
           </a>
         </div>
         <div class="media-body">

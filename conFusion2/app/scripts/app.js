@@ -13,7 +13,7 @@ angular.module('confusionApp', ['ui.router','ngResource'])
           },
           'content': {
             templateUrl: 'views/home.html',
-            controller: 'IndexController'
+            //controller: 'IndexController'
           },
           'footer': {
             templateUrl: 'views/footer.html',
@@ -28,7 +28,7 @@ angular.module('confusionApp', ['ui.router','ngResource'])
         views: {
           'content@': {
             templateUrl: 'views/aboutus.html',
-            controller: 'AboutController'
+            //controller: 'AboutController'
           }
         }
       })
@@ -39,7 +39,7 @@ angular.module('confusionApp', ['ui.router','ngResource'])
         views: {
           'content@': {
             templateUrl: 'views/contactus.html',
-            controller: 'ContactController'
+            //controller: 'ContactController'
           }
         }
       })
@@ -50,7 +50,7 @@ angular.module('confusionApp', ['ui.router','ngResource'])
         views: {
           'content@': {
             templateUrl: 'views/menu.html',
-            controller: 'MenuController'
+            //controller: 'MenuController'
           }
         }
       })
@@ -61,7 +61,7 @@ angular.module('confusionApp', ['ui.router','ngResource'])
         views: {
           'content@': {
             templateUrl: 'views/dishdetail.html',
-            controller: 'DishDetailController'
+            //controller: 'DishDetailController'
           }
         }
       });

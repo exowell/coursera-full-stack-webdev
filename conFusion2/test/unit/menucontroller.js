@@ -5,6 +5,11 @@ describe('Controller: MenuController', function () {
 
   var MenuController, scope, $httpBackend;
 
+  //resolve karma - ui.router conflict
+  beforeEach(module(function($urlRouterProvider) {
+    $urlRouterProvider.deferIntercept();
+  }));
+
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, _$httpBackend_, $rootScope, menuFactory) {
 

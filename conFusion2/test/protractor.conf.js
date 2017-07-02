@@ -1,3 +1,5 @@
+let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
+
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
@@ -10,9 +12,18 @@ exports.config = {
   baseUrl: 'http://localhost:3001/',
 
   framework: 'jasmine',
-    directConnect: true,
+  directConnect: true,
+
+  onPrepare: function () {
+    jasmine.getEnv().addReporter(new SpecReporter({
+      spec: {
+        displayStacktrace: true
+      }
+    }));
+  },
 
   jasmineNodeOpts: {
-    defaultTimeoutInterval: 30000
+    defaultTimeoutInterval: 30000,
+    print: function() {}
   }
 };

@@ -49,4 +49,21 @@ describe('conFusion App E2E Testing', function () {
     });
   });
 
+  describe('contact us feedback form', function () {
+    beforeEach(function () {
+      browser.get('#!/contactus');
+    });
+
+    it('should have empty firstname field', function (){
+      expect(element(by.id('firstname')).getText()).toEqual("");
+    });
+
+    it('should have submit disabled', function () {
+      //var EC = protractor.ExpectedConditions;
+      //browser.wait(EC.presenceOf(element(by.id('feedbackSubmit'))), 15000);
+      var btn = element(by.id('feedbackSubmit'));
+      expect(btn.getAttribute('disabled')).toBe('true');
+    });
+  });
+
 });
