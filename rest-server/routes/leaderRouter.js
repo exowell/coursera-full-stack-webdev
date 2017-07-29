@@ -1,49 +1,64 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var router = express.Router();
+var mongoose = require('mongoose');
 
+var Model = require('../models/leadership');
+
+var router = express.Router();
 router.use(bodyParser.json());
 
 router.route('/')
-  .all(function (req, res, next) {
-    res.writeHead(200, {
-      'Content-Type': 'text/plain'
-    });
-    next();
-  })
-
   .get(function (req, res, next) {
-    res.end('Will send all the leaders to you!');
+    Model.find({}, function (err, leader) {
+      if (err) throw err;
+      res.json(leader);
+    });
   })
 
   .post(function (req, res, next) {
-    res.end('Will add the leader: ' + req.body.name + ' with details: ' + req.body.description);
+    Model.create(req.body, function (err, leader) {
+      if (err) throw err;
+      console.log('Leader created!');
+      var id = leader._id;
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      });
+      res.end('Added the leader with id: ' + id);
+    });
   })
 
   .delete(function (req, res, next) {
-    res.end('Deleting all leaders');
+    Model.remove({}, function (err, resp) {
+      if (err) throw err;
+      res.json(resp);
+    });
   });
 
 router.route('/:leaderId')
-  .all(function (req, res, next) {
-    res.writeHead(200, {
-      'Content-Type': 'text/plain'
-    });
-    next();
-  })
-
   .get(function (req, res, next) {
-    res.end('Will send details of the leader: ' + req.params.leaderId + ' to you!');
+    Model.findById(req.params.leaderId, function (err, leader) {
+      if (err) throw err;
+      res.json(leader);
+    });
   })
 
   .put(function (req, res, next) {
-    res.write('Updating the leader: ' + req.params.leaderId + '\n');
-    res.end('Will update the leader: ' + req.body.name +
-      ' with details: ' + req.body.description);
+    Model.findByIdAndUpdate(req.params.leaderId, {
+      $set: req.body
+    }, {
+      new: true
+    }, function (err, leader) {
+      if (err) throw err;
+      res.json(leader);
+    });
   })
 
   .delete(function (req, res, next) {
-    res.end('Deleting leader: ' + req.params.leaderId);
+    Model.findByIdAndRemove(req.params.leaderId, function (err, resp) {
+      if (err) throw err;
+      res.json(resp);
+    });
   });
 
 module.exports = router;
