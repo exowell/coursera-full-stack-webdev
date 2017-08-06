@@ -8,16 +8,23 @@ var router = express.Router();
 router.use(bodyParser.json());
 
 router.route('/')
+
+  //first route all requests to verify user
+  .all(Verify.verifyOrdinaryUser)
+
   .get(function (req, res, next) {
     Model.find({}, function (err, leader) {
-      if (err) throw err;
+      if (err) return next(err);
       res.json(leader);
     });
   })
 
+  //all non-get requests require admin
+  .all(Verify.verifyAdmin)
+
   .post(function (req, res, next) {
     Model.create(req.body, function (err, leader) {
-      if (err) throw err;
+      if (err) return next(err);
       console.log('Leader created!');
       var id = leader._id;
 
@@ -30,7 +37,7 @@ router.route('/')
 
   .delete(function (req, res, next) {
     Model.remove({}, function (err, resp) {
-      if (err) throw err;
+      if (err) return next(err);
       res.json(resp);
     });
   });
@@ -38,7 +45,7 @@ router.route('/')
 router.route('/:leaderId')
   .get(function (req, res, next) {
     Model.findById(req.params.leaderId, function (err, leader) {
-      if (err) throw err;
+      if (err) return next(err);
       res.json(leader);
     });
   })
@@ -49,14 +56,14 @@ router.route('/:leaderId')
     }, {
       new: true
     }, function (err, leader) {
-      if (err) throw err;
+      if (err) return next(err);
       res.json(leader);
     });
   })
 
   .delete(function (req, res, next) {
     Model.findByIdAndRemove(req.params.leaderId, function (err, resp) {
-      if (err) throw err;
+      if (err) return next(err);
       res.json(resp);
     });
   });
